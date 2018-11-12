@@ -21,7 +21,7 @@ class INISection
     void setValue(const std::string &, const std::string &);
     std::string getAsINI() const;
     std::string getSectionName() const;
-    void addKeyValuePair (std::string&, std::string&);
+    void addKeyValuePair (const std::string&, const std::string&);
 
   private:
     const auto getKeyValuePair(const std::string &key) const;
@@ -33,23 +33,25 @@ class INISection
 class INIFile
 {
   public:
-    INIFile(std::string &);
-    template <class... T>
-    INIFile(T... sections)
+    INIFile(const std::string &);
+    INIFile(const char*);
+    template <class A, class... T>
+    INIFile(A a, T... sections)
     {
-        sectionUnpacker(sections...);
+        typename std::enable_if<std::is_same<A, INISection>::value, int>::type v;
+        sectionUnpacker(a, sections...);
     }
-    const INISection getSection(std::string &) const;
-    INISection getSection(std::string &);
-    std::string getValue(std::string &, std::string &) const;
-    std::string getValue(std::string &, std::string &);
-    std::string setValue(std::string &, std::string &, std::string &);
+    const INISection getSection(const std::string &) const;
+    INISection &getSection(const std::string &);
+    std::string getValue(const std::string &, const std::string &) const;
+    std::string getValue(const std::string &, const std::string &);
+    std::string setValue(const std::string &, const std::string &, const std::string &);
     std::string getAsINI() const;
     void addSection (INISection &);
 
   private:
-    auto getSectionIteratorWithName(std::string &name);
-    const auto getSectionIteratorWithName(std::string &name) const;
+    auto getSectionIteratorWithName(const std::string &name);
+    const auto getSectionIteratorWithName(const std::string &name) const;
 
     template <class A, class... T>
     void sectionUnpacker(A section, T... other)

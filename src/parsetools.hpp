@@ -3,6 +3,7 @@
 #include "wolfrini.hpp"
 #include <string>
 #include <vector>
+#include <regex>
 #include <algorithm>
 namespace WINI {
 std::string removeUntil (std::string toProcess, char until) {
@@ -22,7 +23,7 @@ inline std::string findSectionName (const std::string &iniCode) {
     return getUntil (remaining, ']');
 }
 
-inline std::string removeSectionName (std::string& iniCode) {
+inline std::string removeSectionName (const std::string& iniCode) {
     return removeUntil (iniCode, ']');
 }
 
@@ -33,7 +34,7 @@ inline KeyValuePair getKeyValuePair (std::string line) {
     return temp;
 }
 
-inline std::vector<KeyValuePair> findKeyValuePairs(std::string& iniCode) {
+inline std::vector<KeyValuePair> findKeyValuePairs(const std::string& iniCode) {
     std::vector<KeyValuePair> stored;
     std::string code = removeSectionName(iniCode);
     while (code != "") {
