@@ -15,16 +15,16 @@ struct KeyValuePair
 class INISection
 {
   public:
-    INISection(std::string &);
+    INISection(const std::string &);
     std::string getValue(const std::string &) const;
     void removeKeyValuePair(const std::string &);
     void setValue(const std::string &, const std::string &);
     std::string getAsINI() const;
-    const std::string getSectionName () const;
+    std::string getSectionName() const;
 
   private:
-    const auto getKeyValuePair (const std::string& key) const; 
-    auto getKeyValuePair (const std::string& key); 
+    const auto getKeyValuePair(const std::string &key) const;
+    auto getKeyValuePair(const std::string &key);
     std::string sectionName;
     std::vector<KeyValuePair> data;
 };
@@ -33,16 +33,33 @@ class INIFile
 {
   public:
     INIFile(std::string &);
-    INIFile(INISection &...);
-    const INISection getSection (std::string&) const;
-    INISection getSection (std::string&);
-    const std::string getValue (std::string&, std::string&) const;
-    std::string getValue (std::string&, std::string&);
-    std::string setValue (std::string&, std::string&, std::string&);
+    template <class... T>
+    INIFile(T... sections)
+    {
+        sectionUnpacker(sections...);
+    }
+    const INISection getSection(std::string &) const;
+    INISection getSection(std::string &);
+    std::string getValue(std::string &, std::string &) const;
+    std::string getValue(std::string &, std::string &);
+    std::string setValue(std::string &, std::string &, std::string &);
     std::string getAsINI() const;
+
   private:
-    void sectionUnpacker(const INISection&, const INISection &...);
-    void sectionUnpacker();
+    auto getSectionIteratorWithName(std::string &name);
+    const auto getSectionIteratorWithName(std::string &name) const;
+
+    template <class A, class... T>
+    void sectionUnpacker(A section, T... other)
+    {
+        typename std::enable_if<std::is_same<A, INISection>::value, int>::type a;
+        sections.push_back(section);
+        sectionUnpacker(other...);
+    }
+    void sectionUnpacker()
+    {
+    }
+
     std::vector<INISection> sections;
 };
 } // namespace WINI

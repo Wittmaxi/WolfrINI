@@ -17,7 +17,7 @@ std::string getUntil (std::string toProcess, char until) {
     return std::string (toProcess.begin(), it);
 }
 
-inline std::string findSectionName (std::string &iniCode) {
+inline std::string findSectionName (const std::string &iniCode) {
     std::string remaining = removeUntil (iniCode, '[');
     return getUntil (remaining, ']');
 }
