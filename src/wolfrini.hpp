@@ -15,13 +15,16 @@ struct KeyValuePair
 class INISection
 {
   public:
-    INISection(const std::string &);
+    INISection(std::string &);
     std::string getValue(const std::string &) const;
     void removeKeyValuePair(const std::string &);
     void setValue(const std::string &, const std::string &);
     std::string getAsINI() const;
+    const std::string getSectionName () const;
 
   private:
+    const auto getKeyValuePair (const std::string& key) const; 
+    auto getKeyValuePair (const std::string& key); 
     std::string sectionName;
     std::vector<KeyValuePair> data;
 };
@@ -29,8 +32,8 @@ class INISection
 class INIFile
 {
   public:
-    INIFile(const std::string &);
-    INIFile(const INISection &...);
+    INIFile(std::string &);
+    INIFile(INISection &...);
     const INISection getSection (std::string&) const;
     INISection getSection (std::string&);
     const std::string getValue (std::string&, std::string&) const;
