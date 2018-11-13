@@ -3,7 +3,7 @@
 
 int testnum;
 void test (bool worked, std::string comment = "") {
-    testnum++;
+    ++testnum;
     if (! worked)
         std::cout << "TEST "<< testnum << " FAILED. " << comment << "\n";
 }
@@ -25,6 +25,24 @@ int main () {
     WINI::INISection &sec = myIniFile2.getSection("thatguy");
     sec.addKeyValuePair("hobby", "being cool");
     test (myIniFile2.getValue("thatguy", "hobby") == "being cool");
+    WINI::INIFile myIniFile3 (
+        WINI::INISection (
+            "[hello]\n"
+            "greeter=hi\n"
+            "ungeeter=bye\n"
+        ),
+        WINI::INISection (
+            "[thanks]\n"
+            "thankies=yaay\n"
+        )
+    );
+    test(myIniFile3.getValue("thanks", "thankies") == "yaay");
+    myIniFile3.addSection("section3");
+    myIniFile3.addKeyValuePair("section3", "value", "value2");
+    test (myIniFile3.getValue("section3", "value") == "value2");
+
+    std::cout << myIniFile.getAsINI();
     std::cout << myIniFile2.getAsINI();
+    std::cout << myIniFile3.getAsINI();
     std::cout << testnum << " tests performed\n";
 }

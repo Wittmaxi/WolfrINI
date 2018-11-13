@@ -48,6 +48,8 @@ class INIFile
     std::string setValue(const std::string &, const std::string &, const std::string &);
     std::string getAsINI() const;
     void addSection (INISection &);
+    void addSection (const std::string&);
+    void addKeyValuePair (const std::string&, const std::string&, const std::string&);
 
   private:
     auto getSectionIteratorWithName(const std::string &name);
