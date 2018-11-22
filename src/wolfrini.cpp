@@ -23,10 +23,8 @@ const auto INISection::getKeyValuePair(const std::string &keyName) const
                             return false;
                         });
 }
-INISection::INISection(const std::string &iniCode)
+INISection::INISection(const std::string &iniCode) : sectionName(findSectionName(iniCode)), data(findKeyValuePairs(iniCode))
 {
-    sectionName = findSectionName(iniCode);
-    data = findKeyValuePairs(iniCode);
 }
 std::string INISection::getValue(const std::string &keyName) const
 {

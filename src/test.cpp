@@ -2,10 +2,10 @@
 #include <iostream>
 
 int testnum;
-void test (bool worked, std::string comment = "") {
+void test (bool worked) {
     ++testnum;
     if (! worked)
-        std::cout << "TEST "<< testnum << " FAILED. " << comment << "\n";
+        std::cout << "TEST "<< testnum << " FAILED. \n";
 }
 
 int main () {

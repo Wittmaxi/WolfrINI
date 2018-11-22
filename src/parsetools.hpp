@@ -6,14 +6,14 @@
 #include <regex>
 #include <algorithm>
 namespace WINI {
-std::string removeUntil (std::string toProcess, char until) {
+std::string removeUntil (const std::string &toProcess, char until) {
     auto it = std::find(toProcess.begin(), toProcess.end(), until);
     if (it == toProcess.end()) 
         return "";
     return std::string (++it, toProcess.end());
 }
 
-std::string getUntil (std::string toProcess, char until) {
+std::string getUntil (const std::string &toProcess, char until) {
     auto it = std::find(toProcess.begin(), toProcess.end(), until);
     return std::string (toProcess.begin(), it);
 }
@@ -27,7 +27,7 @@ inline std::string removeSectionName (const std::string& iniCode) {
     return removeUntil (iniCode, ']');
 }
 
-inline KeyValuePair getKeyValuePair (std::string line) {
+inline KeyValuePair getKeyValuePair (const std::string &line) {
     KeyValuePair temp;
     temp.key = getUntil (line, '=');
     temp.value = getUntil (removeUntil(line, '='), ';');

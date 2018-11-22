@@ -34,7 +34,7 @@ class INIFile
 {
   public:
     explicit INIFile(const std::string &);
-    INIFile(const char*);
+    explicit INIFile(const char*);
     template <class A, class... T>
     INIFile(A a, T... sections)
     {
