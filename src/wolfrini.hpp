@@ -15,7 +15,7 @@ struct KeyValuePair
 class INISection
 {
   public:
-    INISection(const std::string &);
+    explicit INISection(const std::string &);
     std::string getValue(const std::string &) const;
     void removeKeyValuePair(const std::string &);
     void setValue(const std::string &, const std::string &);
@@ -33,7 +33,7 @@ class INISection
 class INIFile
 {
   public:
-    INIFile(const std::string &);
+    explicit INIFile(const std::string &);
     INIFile(const char*);
     template <class A, class... T>
     INIFile(A a, T... sections)
