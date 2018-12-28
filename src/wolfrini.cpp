@@ -119,12 +119,22 @@ void INIFile::addSection(INISection &section)
 {
     sections.push_back(section);
 }
-void INIFile::addSection(const std::string& secName)
+void INIFile::addSection(const std::string &secName)
 {
     sections.push_back(INISection("[" + secName + "]"));
 }
-void INIFile::addKeyValuePair (const std::string& section, const std::string& key, const std::string& value) {
-    getSectionIteratorWithName(section)->addKeyValuePair (key, value);
+void INIFile::addKeyValuePair(const std::string &section, const std::string &key, const std::string &value)
+{
+    getSectionIteratorWithName(section)->addKeyValuePair(key, value);
+}
+
+std::vector<INISection>::iterator INIFile::begin()
+{
+    return sections.begin();
+}
+std::vector<INISection>::iterator INIFile::end()
+{
+    return sections.end();
 }
 
 } // namespace WINI
